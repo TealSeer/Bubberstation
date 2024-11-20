@@ -41,7 +41,6 @@
 /area/station/security/prison)
 "aaj" = (
 /obj/machinery/shower/directional/west,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
