@@ -119,15 +119,13 @@
  */
 /datum/preference/choiced/mutant_choice
 	abstract_type = /datum/preference/choiced/mutant_choice
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_BUBBER_MUTANT_FEATURE
 	savefile_identifier = PREFERENCE_CHARACTER
 
 	/// Path to the default sprite accessory
 	var/datum/sprite_accessory/default_accessory_type = /datum/sprite_accessory/blank
 	/// Path to the corresponding /datum/preference/toggle to check if part is enabled.
 	var/datum/preference/toggle/type_to_check
-	/// Generates icons from the provided mutant bodypart for use in icon-enabled selection boxes in the prefs window.
-	var/generate_icons = FALSE
 	/// A list of the four co-ordinates to crop to, if `generate_icons` is enabled. Useful for icons whose main contents are smaller than 32x32. Please keep it square.
 	var/list/crop_area
 	/// A color to apply to the icon if it's greyscale, and `generate_icons` is enabled.

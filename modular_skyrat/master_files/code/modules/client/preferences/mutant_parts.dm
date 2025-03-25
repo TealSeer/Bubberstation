@@ -471,7 +471,6 @@
 	relevant_mutant_bodypart = MUTANT_SYNTH_SCREEN
 	default_accessory_type = /datum/sprite_accessory/screen/none
 	should_generate_icons = TRUE
-	generate_icons = TRUE
 	crop_area = list(11, 22, 21, 32) // We want just the head.
 	greyscale_color = DEFAULT_SYNTH_SCREEN_COLOR
 
@@ -554,7 +553,6 @@
 	relevant_mutant_bodypart = MUTANT_SYNTH_CHASSIS
 	default_accessory_type = /datum/sprite_accessory/synth_chassis/default
 	should_generate_icons = TRUE
-	generate_icons = TRUE
 	crop_area = list(8, 8, 24, 24) // We want just the body.
 	greyscale_color = DEFAULT_SYNTH_PART_COLOR
 
@@ -597,7 +595,6 @@
 	relevant_mutant_bodypart = MUTANT_SYNTH_HEAD
 	default_accessory_type = /datum/sprite_accessory/synth_head/default
 	should_generate_icons = TRUE
-	generate_icons = TRUE
 	crop_area = list(11, 22, 21, 32) // We want just the head.
 	greyscale_color = DEFAULT_SYNTH_PART_COLOR
 
@@ -853,7 +850,6 @@
 	relevant_mutant_bodypart = "pod_hair"
 	default_accessory_type = /datum/sprite_accessory/pod_hair/ivy
 	should_generate_icons = TRUE
-	generate_icons = TRUE
 
 /datum/preference/choiced/mutant_choice/pod_hair/icon_for(value)
 	var/datum/sprite_accessory/pod_hair/pod_hair = SSaccessories.sprite_accessories[relevant_mutant_bodypart][value]
