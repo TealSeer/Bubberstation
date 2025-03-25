@@ -14,3 +14,6 @@
 #define ORGAN_PREF_POSI_BRAIN "Positronic Brain"
 #define ORGAN_PREF_MMI_BRAIN "Man-Machine Interface"
 #define ORGAN_PREF_CIRCUIT_BRAIN "Circuitboard"
+
+/// Functions exactly like PREFERENCE_CATEGORY_FEATURE, but lists after every other feature.
+#define PREFERENCE_CATEGORY_BUBBER_MUTANT_FEATURE "mutant_feature"

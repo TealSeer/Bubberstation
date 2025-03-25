@@ -40,7 +40,7 @@
 
 /// For main feature preferences, this key refers to a feature considered supplemental.
 /// For instance, hair color being supplemental to hair.
-#define SUPPLEMENTAL_FEATURE_KEY "supplemental_feature"
+#define SUPPLEMENTAL_FEATURE_KEY "supplemental_features" // BUBBER EDIT: Better prefs: plural because it's a list now
 
 /// An assoc list list of types to instantiated `/datum/preference` instances
 GLOBAL_LIST_INIT(preference_entries, init_preference_entries())
