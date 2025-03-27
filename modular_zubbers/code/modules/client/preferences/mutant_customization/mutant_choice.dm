@@ -149,7 +149,7 @@
 		var/datum/universal_icon/icon_to_process = uni_icon(sprite_accessory.icon, icon_state, sprite_direction, 1)
 
 		if(greyscale_color && sprite_accessory.color_src)
-			icon_to_process.blend_icon(behind_icon_states_to_use[icon_state], ICON_MULTIPLY)
+			icon_to_process.blend_color(behind_icon_states_to_use[icon_state], ICON_MULTIPLY)
 
 		// THIS DOESN'T WORK. HI WINGS, YOU SUCK.
 		// if (sprite_accessory.center)
@@ -166,7 +166,7 @@
 		var/datum/universal_icon/icon_to_process = uni_icon(sprite_accessory.icon, icon_state, sprite_direction, 1)
 
 		if(greyscale_color && sprite_accessory.color_src)
-			icon_to_process.blend_icon(icon_states_to_use[icon_state], ICON_MULTIPLY)
+			icon_to_process.blend_color(icon_states_to_use[icon_state], ICON_MULTIPLY)
 
 		// THIS DOESN'T WORK. HI WINGS, YOU SUCK.
 		// if (sprite_accessory.center)
