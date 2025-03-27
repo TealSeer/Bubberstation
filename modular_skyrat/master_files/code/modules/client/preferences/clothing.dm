@@ -9,8 +9,8 @@
 	var/datum/species/species = new species_type
 	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
 
-/datum/preference/choiced/undershirt
-	supplemental_features = list("undershirt_color")
+/datum/preference/choiced/underwear
+	supplemental_features = list("underwear_color")
 
 /datum/preference/choiced/undershirt/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

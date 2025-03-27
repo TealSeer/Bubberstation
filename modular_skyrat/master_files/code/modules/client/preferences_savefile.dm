@@ -3,7 +3,7 @@
  * You can't really use the non-modular version, least you eventually want asinine merge
  * conflicts and/or potentially disastrous issues to arise, so here's your own.
  */
-#define MODULAR_SAVEFILE_VERSION_MAX 8
+#define MODULAR_SAVEFILE_VERSION_MAX 9
 
 #define MODULAR_SAVEFILE_UP_TO_DATE -1
 
@@ -15,6 +15,7 @@
 #define VERSION_LANGUAGES 6
 #define VERSION_LOADOUT_PRESETS 7
 #define VERSION_INTERNAL_EXTERNAL_ORGANS 8
+#define VERSION_PREFS_GLOWUP 9
 
 #define INDEX_UNDERWEAR 1
 #define INDEX_BRA 2
@@ -124,20 +125,20 @@
 			var/list/new_color
 
 			if(old_species == "synthhuman")
-				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant_choice/synth_chassis], "Human Chassis")
-				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant_choice/synth_head], "Human Head")
+				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant/synth_chassis], "Human Chassis")
+				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant/synth_head], "Human Head")
 				// Get human skintone instead of mutant color
 				new_color = save_data["skin_tone"]
 				new_color = skintone2hex(new_color)
 			else if(old_species == "synthliz")
-				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant_choice/synth_chassis], "Lizard Chassis")
-				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant_choice/synth_head], "Lizard Head")
+				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant/synth_chassis], "Lizard Chassis")
+				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant/synth_head], "Lizard Head")
 			if(old_species == "synthmammal")
-				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant_choice/synth_chassis], "Mammal Chassis")
-				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant_choice/synth_head], "Mammal Head")
+				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant/synth_chassis], "Mammal Chassis")
+				write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant/synth_head], "Mammal Head")
 
 			// Sorry, but honestly, you folk might like to browse the IPC screens now they've got previews.
-			write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant_choice/ipc_screen], "None")
+			write_preference(GLOB.preference_entries[/datum/preference/choiced/mutant/ipc_screen], "None")
 			// Unfortunately, you will get a human last name applied due to load behaviours. Nothing I can do about it.
 			write_preference(GLOB.preference_entries[/datum/preference/choiced/species], "synth")
 
@@ -149,8 +150,8 @@
 				// Just let validation pick it's own value.
 
 			if(new_color)
-				write_preference(GLOB.preference_entries[/datum/preference/color/mutant/synth_chassis], new_color)
-				write_preference(GLOB.preference_entries[/datum/preference/color/mutant/synth_head], new_color)
+				write_preference(GLOB.preference_entries[/datum/preference/mutant_color/synth_chassis], new_color)
+				write_preference(GLOB.preference_entries[/datum/preference/mutant_color/synth_head], new_color)
 
 	if(current_version < VERSION_UNDERSHIRT_BRA_SPLIT)
 		var/static/list/underwear_to_underwear_bra = list(
@@ -265,6 +266,12 @@
 			save_augments[augment_name] = "/obj/item/organ[augment_path_string_stripped]"
 		load_augments(save_augments)
 
+	if(current_version < VERSION_PREFS_GLOWUP)
+		if(save_data["ipc_screen_emissive"] != null)
+			write_preference(GLOB.preference_entries[/datum/preference/emissive_toggle/ipc_screen_emissive], list(save_data["ipc_screen_emissive"], FALSE, FALSE))
+		if(save_data["pod_hair_emissive"] != null)
+			write_preference(GLOB.preference_entries[/datum/preference/emissive_toggle/pod_hair_emissive], list(save_data["pod_hair_emissive"], FALSE, FALSE))
+
 	to_chat(parent, custom_boxed_message("green_box", span_greentext("Updated preferences!")))
 
 /datum/preferences/proc/check_migration()
@@ -303,7 +310,7 @@
 				mutant_bodyparts -= part
 		else
 			var/datum/preference/choiced/name = GLOB.preference_entries_by_key["feature_[part]"]
-			var/datum/preference/tri_color/color = GLOB.preference_entries_by_key["[part]_color"]
+			var/datum/preference/mutant_color/color = GLOB.preference_entries_by_key["[part]_color"]
 			if (isnull(name) || isnull(color))
 				return
 			mutant_bodyparts[part] = list()
@@ -312,7 +319,7 @@
 	if (istype(preference, /datum/preference/choiced))
 		if (part in mutant_bodyparts)
 			mutant_bodyparts[part][MUTANT_INDEX_NAME] = value
-	if (istype(preference, /datum/preference/tri_color))
+	if (istype(preference, /datum/preference/mutant_color))
 		if (part in mutant_bodyparts)
 			mutant_bodyparts[part][MUTANT_INDEX_COLOR_LIST] = value
 
@@ -349,6 +356,7 @@
 #undef VERSION_LANGUAGES
 #undef VERSION_LOADOUT_PRESETS
 #undef VERSION_INTERNAL_EXTERNAL_ORGANS
+#undef VERSION_PREFS_GLOWUP
 
 #undef INDEX_UNDERWEAR
 #undef INDEX_BRA
