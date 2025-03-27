@@ -102,7 +102,7 @@
 
 	var/datum/universal_icon/human_icon = sprite_accessory.get_base_preview_icon()
 	if (human_icon)
-		human_icon = uni_icon(human_icon, human_icon.icon_state, sprite_direction, 1)
+		human_icon = uni_icon(human_icon.icon_file, human_icon.icon_state, sprite_direction, 1)
 
 	var/list/icon_state_templates_to_use = list()
 
