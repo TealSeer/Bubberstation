@@ -5,6 +5,11 @@
 	greyscale_color = DEFAULT_SYNTH_SCREEN_COLOR
 	supplemental_features = list("ipc_screen_color")
 
+/datum/preference/choiced/mutant/ipc_screen/is_accessible(datum/preferences/preferences, check_page)
+	if(!current_species_has_savekey(preferences))
+		return FALSE
+	. = ..()
+
 /datum/preference/choiced/mutant/ipc_screen/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	var/species_path = preferences?.read_preference(/datum/preference/choiced/species)
 	if(!ispath(species_path, /datum/species/synthetic)) // This is what we do so it doesn't show up on non-synthetics.
@@ -31,6 +36,11 @@
 	relevant_mutant_bodypart = MUTANT_SYNTH_ANTENNA
 	supplemental_features = list("ipc_antenna_color", "ipc_antenna_emissive")
 
+/datum/preference/choiced/mutant/synth_antenna/is_accessible(datum/preferences/preferences, check_page)
+	if(!current_species_has_savekey(preferences))
+		return FALSE
+	. = ..()
+
 /datum/preference/mutant_color/synth_antenna
 	savefile_key = "ipc_antenna_color"
 	relevant_mutant_bodypart = MUTANT_SYNTH_ANTENNA
@@ -51,6 +61,11 @@
 	greyscale_color = DEFAULT_SYNTH_PART_COLOR
 	supplemental_features = list("ipc_chassis_color")
 
+/datum/preference/choiced/mutant/synth_chassis/is_accessible(datum/preferences/preferences, check_page)
+	if(!current_species_has_savekey(preferences))
+		return FALSE
+	. = ..()
+
 /datum/preference/choiced/mutant/synth_chassis/generate_icon_states(datum/sprite_accessory/sprite_accessory, original_icon_state)
 	// If this isn't the right type, we have much bigger problems.
 	var/datum/sprite_accessory/synth_chassis/chassis = sprite_accessory
@@ -70,6 +85,11 @@
 	default_accessory_name = "Default Head"
 	greyscale_color = DEFAULT_SYNTH_PART_COLOR
 	supplemental_features = list("ipc_head_color")
+
+/datum/preference/choiced/mutant/synth_head/is_accessible(datum/preferences/preferences, check_page)
+	if(!current_species_has_savekey(preferences))
+		return FALSE
+	. = ..()
 
 /datum/preference/choiced/mutant/synth_head/generate_icon_states(datum/sprite_accessory/sprite_accessory, original_icon_state)
 	// If this isn't the right type, we have much bigger problems.
