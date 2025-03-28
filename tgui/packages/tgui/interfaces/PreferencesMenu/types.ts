@@ -207,6 +207,7 @@ export type PreferencesMenuData = {
     };
 
     randomization: Record<string, RandomSetting>;
+    mutant_features: Record<string, string>; // BUBBER EDIT ADDITION: Better prefs
   };
 
   content_unlocked: BooleanLike;
