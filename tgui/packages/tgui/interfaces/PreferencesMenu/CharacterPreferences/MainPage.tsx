@@ -243,6 +243,12 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
                             image,
                             'centered-image',
                           ])}
+                          // BUBBER EDIT ADDITION BEGIN: Better prefs: Force the icon to fill the button
+                          style={{
+                            transform:
+                              'translateX(-50%) translateY(-50%) scale(1.3)',
+                          }}
+                          // BUBBER EDIT ADDITION END: Better prefs: Force the icon to fill the button
                         />
                       </Button>
                     </Flex.Item>

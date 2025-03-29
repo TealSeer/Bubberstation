@@ -134,14 +134,14 @@
 			color = darken_color(color)
 
 	var/icon/fuck_my_life
-	var/datum/universal_icon/base = uni_icon('modular_zubbers/icons/customization/template.dmi', "blank_template", SOUTH, 1)
+	var/datum/universal_icon/base = uni_icon('modular_zubbers/icons/customization/template.dmi', "blank", SOUTH, 1)
 	if (behind_icon_states_to_use.len || icon_states_to_use.len)
 		// Hate.
 		var/icon/i_need_just_your_size_fuck = icon(sprite_accessory.icon, (behind_icon_states_to_use + icon_states_to_use)[1], sprite_direction, 1)
 		base.scale(i_need_just_your_size_fuck.Width(), i_need_just_your_size_fuck.Height())
 		fuck_my_life = base.to_icon()
 	if (!fuck_my_life || fuck_my_life.Width() < 32 || fuck_my_life.Height() < 32) // Fucking sprite accessory bullshit
-		base = uni_icon('modular_zubbers/icons/customization/template.dmi', "blank_template", SOUTH, 1)
+		base = uni_icon('modular_zubbers/icons/customization/template.dmi', "blank", SOUTH, 1)
 
 	var/human_body_offset = round((base.to_icon().Width()/2) - 15)
 
