@@ -41,8 +41,8 @@ const CLOTHING_CELL_SIZE = 54;
 const CLOTHING_SIDEBAR_ROWS = 12.4; // BUBBER EDIT CHANGE - ORIGINAL:  9
 
 const CLOTHING_SELECTION_CELL_SIZE = 48;
-const CLOTHING_SELECTION_WIDTH = 5.4;
-const CLOTHING_SELECTION_MULTIPLIER = 5.2;
+const CLOTHING_SELECTION_WIDTH = 8; // BUBBER EDIT: ORIGINAL: 5.4
+const CLOTHING_SELECTION_MULTIPLIER = 8.08; // BUBBER EDIT: ORIGINAL: 5.2
 
 type CharacterControlsProps = {
   handleRotate: () => void;
@@ -113,7 +113,7 @@ function CharacterControls(props: CharacterControlsProps) {
 
 type ChoicedSelectionProps = {
   name: string;
-  catalog: FeatureChoicedServerData;
+  catalog: FeatureChoicedServerData & { supplemental_features?: string[] }; // BUBBER EDIT: Better prefs
   selected: string;
   supplementalFeature?: string;
   supplementalValue?: unknown;
@@ -124,6 +124,7 @@ type ChoicedSelectionProps = {
 function ChoicedSelection(props: ChoicedSelectionProps) {
   const { catalog, supplementalFeature, supplementalValue } = props;
   const [getSearchText, searchTextSet] = useState('');
+  const { data } = useBackend<PreferencesMenuData>(); // BUBBER EDIT: Better prefs
 
   if (!catalog.icons) {
     return <Box color="red">Provided catalog had no icons!</Box>;
@@ -144,16 +145,19 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
       <Stack vertical fill>
         <Stack.Item>
           <Stack fill>
-            {supplementalFeature && (
-              <Stack.Item>
-                <FeatureValueInput
-                  feature={features[supplementalFeature]}
-                  featureId={supplementalFeature}
-                  shrink
-                  value={supplementalValue}
-                />
-              </Stack.Item>
-            )}
+            {
+              // BUBBER EDIT REMOVAL BEGIN: Better prefs
+              // {supplementalFeature && (
+              //   <Stack.Item>
+              //     <FeatureValueInput
+              //       feature={features[supplementalFeature]}
+              //       featureId={supplementalFeature}
+              //       shrink
+              //       value={supplementalValue}
+              //     />
+              //   </Stack.Item>
+              // )}
+            }
 
             <Stack.Item grow>
               <Box
@@ -175,6 +179,30 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
             </Stack.Item>
           </Stack>
         </Stack.Item>
+
+        {
+          // BUBBER EDIT ADDITION BEGIN: Better prefs: Make supplemental features display fully under the header
+          catalog.supplemental_features && (
+            <Stack.Item>
+              <PreferenceList
+                preferences={(() => {
+                  // Lazy hack fraud method
+                  const supplementalsRecord = new Object() as Record<
+                    string,
+                    unknown
+                  >;
+                  catalog.supplemental_features.forEach((value) => {
+                    supplementalsRecord[value] =
+                      data.character_preferences.supplemental_features[value];
+                  });
+                  return supplementalsRecord;
+                })()}
+                maxHeight=""
+              />
+            </Stack.Item>
+          )
+          // BUBBER EDIT ADDITION END: Better prefs: Make supplemental features display fully under the header
+        }
 
         <Stack.Item overflowX="hidden" overflowY="scroll">
           <Autofocus>
@@ -292,7 +320,7 @@ function GenderButton(props: GenderButtonProps) {
 
 type CatalogItem = {
   name: string;
-  supplemental_feature?: string;
+  supplemental_features: string[]; // BUBBER EDIT: Better prefs: ORIGINAL: supplemental_feature?: string;
 };
 
 type MainFeatureProps = {
@@ -320,7 +348,7 @@ function MainFeature(props: MainFeatureProps) {
     setRandomization,
   } = props;
 
-  const supplementalFeature = catalog.supplemental_feature;
+  // const supplementalFeature = catalog.supplemental_features; // BUBBER EDIT REMOVAL: Better prefs
 
   return (
     <Popper
@@ -333,13 +361,14 @@ function MainFeature(props: MainFeatureProps) {
           name={catalog.name}
           catalog={catalog}
           selected={currentValue}
-          supplementalFeature={supplementalFeature}
-          supplementalValue={
-            supplementalFeature &&
-            data.character_preferences.supplemental_features[
-              supplementalFeature
-            ]
-          }
+          // BUBBER EDIT REMOVAL: Better prefs: these aren't used anymore
+          // supplementalFeature={supplementalFeature}
+          // supplementalValue={
+          //   supplementalFeature &&
+          //   data.character_preferences.supplemental_features[
+          //     supplementalFeature
+          //   ]
+          // }
           onClose={handleClose}
           onSelect={handleSelect}
         />
@@ -417,7 +446,7 @@ function sortPreferences(array: [string, unknown][]) {
 
 type PreferenceListProps = {
   preferences: Record<string, unknown>;
-  randomizations: Record<string, RandomSetting>;
+  randomizations?: Record<string, RandomSetting>; // BUBBER EDIT: Better prefs: ORIGINAL: randomizations: Record<string, RandomSetting>;
   maxHeight: string;
   children?: ReactNode;
 };
@@ -442,7 +471,7 @@ export function PreferenceList(props: PreferenceListProps) {
         {sortPreferences(Object.entries(preferences)).map(
           ([featureId, value]) => {
             const feature = features[featureId];
-            const randomSetting = randomizations[featureId];
+            const randomSetting = randomizations && randomizations[featureId]; // BUBBER EDIT: Better prefs: ORIGINAL: const randomSetting = randomizations[featureId];
 
             if (feature === undefined) {
               return (
@@ -541,6 +570,7 @@ export function MainPage(props: MainPageProps) {
   const mainFeatures = [
     ...Object.entries(data.character_preferences.clothing ?? {}),
     ...Object.entries(data.character_preferences.features ?? {}),
+    ...Object.entries(data.character_preferences.mutant_features ?? {}), // BUBBER EDIT: Better prefs
   ];
 
   const randomBodyEnabled =
@@ -710,6 +740,7 @@ export function MainPage(props: MainPageProps) {
                 clothingKey
               ] as FeatureChoicedServerData & {
                 name: string;
+                supplemental_features: string[]; // BUBBER EDIT ADDITION: Better prefs
               };
 
               return (
