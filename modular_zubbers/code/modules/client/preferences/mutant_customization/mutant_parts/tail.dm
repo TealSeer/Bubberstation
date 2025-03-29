@@ -3,7 +3,7 @@
 	relevant_mutant_bodypart = "tail"
 
 /datum/preference/choiced/mutant/tail
-	main_feature_name = "Tails"
+	main_feature_name = "Tail"
 	savefile_key = "feature_tail"
 	relevant_mutant_bodypart = "tail"
 	type_to_check = /datum/preference/toggle/mutant_toggle/tail
