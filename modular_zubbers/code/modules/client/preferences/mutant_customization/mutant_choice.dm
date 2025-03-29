@@ -97,9 +97,6 @@
 
 /// Generates and allows for post-processing on icons, such as greyscaling and cropping.
 /datum/preference/choiced/mutant/proc/generate_icon(datum/sprite_accessory/sprite_accessory, dir = SOUTH)
-	if(!sprite_accessory.icon_state || sprite_accessory.name == SPRITE_ACCESSORY_NONE)
-		return uni_icon('icons/mob/landmarks.dmi', "x")
-
 	var/datum/universal_icon/human_icon = sprite_accessory.get_base_preview_icon()
 	if (human_icon)
 		human_icon = uni_icon(human_icon.icon_file, human_icon.icon_state, sprite_direction, 1)
@@ -188,6 +185,10 @@
 /datum/preference/choiced/mutant/icon_for(value)
 	if (!should_generate_icons)
 		CRASH("Tried to generate a mutant icon for [type], even though should_generate_icons = FALSE!")
-	return generate_icon(sprite_accessory[value], sprite_direction)
+
+	var/datum/sprite_accessory/accessory = sprite_accessory[value]
+	if(!accessory.icon_state || accessory.name == SPRITE_ACCESSORY_NONE)
+		return uni_icon('icons/mob/landmarks.dmi', "x")
+	return generate_icon(accessory, sprite_direction)
 
 #undef REQUIRED_CROP_LIST_SIZE

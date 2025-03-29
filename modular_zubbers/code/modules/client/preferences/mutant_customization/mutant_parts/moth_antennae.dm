@@ -19,7 +19,7 @@
 	var/datum/universal_icon/icon_with_antennae = moth_head.copy()
 	icon_with_antennae.blend_icon(uni_icon(sprite_accessory.icon, "m_moth_antennae_[sprite_accessory.icon_state]_FRONT"), ICON_OVERLAY)
 	icon_with_antennae.scale(64, 64)
-	icon_with_antennae.crop(15, 64, 15 + 31, 64 - 31)
+	icon_with_antennae.crop(15, 64 - 31, 15 + 31, 64)
 
 	return icon_with_antennae
 

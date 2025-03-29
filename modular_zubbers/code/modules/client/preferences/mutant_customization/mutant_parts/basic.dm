@@ -38,8 +38,26 @@
 /datum/preference/mutant_color/mutant_colors
 	savefile_key = "mutant_colors_color"
 	check_mode = TRICOLOR_NO_CHECK
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/mutant_color/mutant_colors/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["mcolor"] = sanitize_hexcolor(value[1])
 	target.dna.features["mcolor2"] = sanitize_hexcolor(value[2])
 	target.dna.features["mcolor3"] = sanitize_hexcolor(value[3])
+
+/datum/preference/toggle/eye_emissives
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "eye_emissives"
+	relevant_head_flag = HEAD_EYECOLOR
+
+/datum/preference/toggle/eye_emissives/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
+	value = value && preferences
+
+	var/obj/item/organ/eyes/eyes_organ = target.get_organ_by_type(/obj/item/organ/eyes)
+	target.emissive_eyes = value
+	if (istype(eyes_organ))
+		eyes_organ.is_emissive = value
+
+/datum/preference/toggle/eye_emissives/create_default_value()
+	return FALSE

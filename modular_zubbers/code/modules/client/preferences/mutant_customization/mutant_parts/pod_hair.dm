@@ -13,14 +13,14 @@
 
 /datum/preference/choiced/mutant/pod_hair/generate_icon(datum/sprite_accessory/pod_hair, dir)
 	var/datum/universal_icon/icon_with_hair = pod_head.copy()
-	var/datum/universal_icon/icon_adj = uni_icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_ADJ")
+	var/datum/universal_icon/icon_adj = uni_icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_FRONT_OVER_HAIR")
 	var/datum/universal_icon/icon_front = uni_icon(pod_hair.icon, "m_pod_hair_[pod_hair.icon_state]_FRONT_OVER")
 	icon_front.blend_color(COLOR_MAGENTA, ICON_MULTIPLY)
 	icon_adj.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
 	icon_adj.blend_icon(icon_front, ICON_OVERLAY)
 	icon_with_hair.blend_icon(icon_adj, ICON_OVERLAY)
 	icon_with_hair.scale(64, 64)
-	icon_with_hair.crop(15, 64, 15 + 31, 64 - 31)
+	icon_with_hair.crop(15, 64 - 31, 15 + 31, 64)
 
 	return icon_with_hair
 
