@@ -669,7 +669,8 @@ export function MainPage(props: MainPageProps) {
         />
       )}
 
-      <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
+      {/* BUBBBER EDIT CHANGE: Better prefs: ORIGINAL: <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}> */}
+      <Stack fill height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
         <Stack.Item>
           <Stack vertical fill>
             <Stack.Item>
@@ -739,7 +740,8 @@ export function MainPage(props: MainPageProps) {
           </Stack>
         </Stack.Item>
 
-        <Stack.Item width={`${CLOTHING_CELL_SIZE + 2}px`}>
+        {/* BUBBER EDIT CHANGE: Better prefs: ORIGINAL: <Stack.Item width={`${CLOTHING_CELL_SIZE + 2}px`}> */}
+        <Stack.Item>
           <Stack height="100%" vertical wrap ml="-3px" mt="-3px">
             {mainFeatures.map(([clothingKey, clothing]) => {
               const catalog = serverData?.[
