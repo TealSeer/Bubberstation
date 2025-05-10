@@ -476,7 +476,6 @@
 #include "code\__DEFINES\~skyrat_defines\obj_flags.dm"
 #include "code\__DEFINES\~skyrat_defines\opposing_force_defines.dm"
 #include "code\__DEFINES\~skyrat_defines\pinpointers.dm"
-#include "code\__DEFINES\~skyrat_defines\preferences.dm"
 #include "code\__DEFINES\~skyrat_defines\projectiles.dm"
 #include "code\__DEFINES\~skyrat_defines\quirks.dm"
 #include "code\__DEFINES\~skyrat_defines\reagents.dm"
