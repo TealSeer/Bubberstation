@@ -98,8 +98,7 @@
 /// Generates and allows for post-processing on icons, such as greyscaling and cropping.
 /datum/preference/choiced/mutant/proc/generate_icon(datum/sprite_accessory/sprite_accessory, dir = SOUTH)
 	var/datum/universal_icon/human_icon = sprite_accessory.get_base_preview_icon()
-	if (human_icon)
-		human_icon = uni_icon(human_icon.icon_file, human_icon.icon_state, sprite_direction, 1)
+	human_icon = uni_icon(human_icon.icon_file, human_icon.icon_state, sprite_direction, 1)
 
 	var/list/icon_state_templates_to_use = list()
 
@@ -130,17 +129,23 @@
 				icon_states_to_use[state] = color
 			color = darken_color(color)
 
-	var/icon/fuck_my_life
-	var/datum/universal_icon/base = uni_icon('modular_zubbers/icons/customization/template.dmi', "blank", SOUTH, 1)
-	if (behind_icon_states_to_use.len || icon_states_to_use.len)
-		// Hate.
-		var/icon/i_need_just_your_size_fuck = icon(sprite_accessory.icon, (behind_icon_states_to_use + icon_states_to_use)[1], sprite_direction, 1)
-		base.scale(i_need_just_your_size_fuck.Width(), i_need_just_your_size_fuck.Height())
-		fuck_my_life = base.to_icon()
-	if (!fuck_my_life || fuck_my_life.Width() < 32 || fuck_my_life.Height() < 32) // Fucking sprite accessory bullshit
-		base = uni_icon('modular_zubbers/icons/customization/template.dmi', "blank", SOUTH, 1)
+	if(!length(behind_icon_states_to_use) && !length(icon_states_to_use))
+		return uni_icon('modular_zubbers/icons/customization/template.dmi', "blank")
 
-	var/human_body_offset = round((base.to_icon().Width()/2) - 15)
+	var/datum/universal_icon/base = uni_icon('modular_zubbers/icons/customization/template_96x96.dmi', "blank", SOUTH, 1)
+	var/icon/i_need_just_your_size_fuck = icon(sprite_accessory.icon, (behind_icon_states_to_use | icon_states_to_use)[1], sprite_direction, 1)
+	var/width = i_need_just_your_size_fuck.Width()
+	var/height = i_need_just_your_size_fuck.Height()
+	base.crop(1, 1, width, height)
+	human_icon.crop(1, 1, width, height)
+	var/body_x_offset = round((width/2) - 16, 1)
+	var/body_y_offset = round((height/2) - 16, 1)
+	human_icon.crop(
+		body_x_offset > 0 ? -body_x_offset + 1 : 1,
+		body_y_offset > 0 ? -body_y_offset + 1 : 1,
+		width + body_x_offset,
+		height + body_y_offset
+	)
 
 	for(var/icon_state in behind_icon_states_to_use)
 		var/datum/universal_icon/icon_to_process = uni_icon(sprite_accessory.icon, icon_state, sprite_direction, 1)
@@ -148,16 +153,9 @@
 		if(greyscale_color && sprite_accessory.color_src)
 			icon_to_process.blend_color(behind_icon_states_to_use[icon_state], ICON_MULTIPLY)
 
-		// THIS DOESN'T WORK. HI WINGS, YOU SUCK.
-		// if (sprite_accessory.center)
-		// 	center_blend_icon(base, icon_to_process, sprite_accessory.dimension_x, sprite_accessory.dimension_y)
-		// else if (istype(sprite_accessory, /datum/sprite_accessory/wings))
-		// 	base.Blend(icon_to_process, ICON_OVERLAY, human_body_offset) // Fucking wings.
-		// else
 		base.blend_icon(icon_to_process, ICON_OVERLAY)
 
-	if (human_icon)
-		base.blend_icon(human_icon, ICON_OVERLAY, human_body_offset, 1)
+	base.blend_icon(human_icon, ICON_OVERLAY)
 
 	for(var/icon_state in icon_states_to_use)
 		var/datum/universal_icon/icon_to_process = uni_icon(sprite_accessory.icon, icon_state, sprite_direction, 1)
@@ -165,20 +163,19 @@
 		if(greyscale_color && sprite_accessory.color_src)
 			icon_to_process.blend_color(icon_states_to_use[icon_state], ICON_MULTIPLY)
 
-		// THIS DOESN'T WORK. HI WINGS, YOU SUCK.
-		// if (sprite_accessory.center)
-		// 	center_blend_icon(base, icon_to_process, sprite_accessory.dimension_x, sprite_accessory.dimension_y)
-		// else if (istype(sprite_accessory, /datum/sprite_accessory/wings))
-		// 	base.Blend(icon_to_process, ICON_OVERLAY, human_body_offset) // Fucking wings.
-		// else
 		base.blend_icon(icon_to_process, ICON_OVERLAY)
 
-	var/list/crop_area = sprite_accessory.crop_area
-	if(islist(crop_area) && crop_area.len == REQUIRED_CROP_LIST_SIZE)
-		base.crop(crop_area[1] + human_body_offset, crop_area[2], crop_area[3], crop_area[4] + human_body_offset)
-	else if(crop_area)
-		stack_trace("Invalid crop paramater! The provided crop area list for [sprite_accessory.type] is not four entries long, or is not a list!")
-	base.scale(32, 32)
+	//var/list/crop_area = sprite_accessory.crop_area
+	//if(islist(crop_area) && crop_area.len == REQUIRED_CROP_LIST_SIZE)
+	//	base.crop(crop_area[1] + human_body_offset, crop_area[2], crop_area[3], crop_area[4] + human_body_offset)
+	//else if(crop_area)
+	//	stack_trace("Invalid crop paramater! The provided crop area list for [sprite_accessory.type] is not four entries long, or is not a list!")
+	base.crop(
+		body_x_offset > 0 ? body_x_offset + 1 : 1,
+		body_y_offset > 0 ? body_y_offset + 1 : 1,
+		body_x_offset + 32,
+		body_y_offset + 32
+	)
 
 	return base
 

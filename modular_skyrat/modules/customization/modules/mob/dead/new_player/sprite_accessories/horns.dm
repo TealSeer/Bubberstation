@@ -62,6 +62,8 @@
 	icon_state = "oni_large"
 
 /datum/sprite_accessory/horns/big
+	dimension_y = 48
+	center = TRUE
 	icon = 'modular_skyrat/master_files/icons/mob/sprite_accessory/horns_big.dmi'
 
 /datum/sprite_accessory/horns/big/antlers

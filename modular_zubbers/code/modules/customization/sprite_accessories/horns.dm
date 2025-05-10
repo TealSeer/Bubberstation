@@ -34,6 +34,8 @@
 	icon_state = "biterhorns"
 
 /datum/sprite_accessory/horns/bubber/big
+	dimension_y = 48
+	center = TRUE
 	icon = 'modular_zubbers/icons/customization/horns_big.dmi'
 
 /datum/sprite_accessory/horns/bubber/big/paintedpoints

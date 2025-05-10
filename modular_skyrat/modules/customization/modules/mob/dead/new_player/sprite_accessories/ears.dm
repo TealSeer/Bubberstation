@@ -86,6 +86,7 @@
 /datum/sprite_accessory/ears/mutant/bigwolfinner
 	name = "Big Wolf (ALT)"
 	icon_state = "bigwolfinner"
+	color_src = USE_ONE_COLOR
 	has_inner = TRUE
 
 /datum/sprite_accessory/ears/mutant/bigwolfdark //alphabetical sort ignored here for ease-of-use
@@ -95,6 +96,7 @@
 /datum/sprite_accessory/ears/mutant/bigwolfinnerdark
 	name = "Dark Big Wolf (ALT)"
 	icon_state = "bigwolfinnerdark"
+	color_src = USE_ONE_COLOR
 	has_inner = TRUE
 
 /datum/sprite_accessory/ears/mutant/bunny

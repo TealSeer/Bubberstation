@@ -2,13 +2,13 @@
 	crop_area = list(8, 8, 24, 24) // We want just the body.
 
 /datum/sprite_accessory/synth_chassis/get_base_preview_icon()
-	return
+	return uni_icon('modular_zubbers/icons/customization/template.dmi', "blank")
 
 /datum/sprite_accessory/synth_head
 	crop_area = list(8, 18, 23, 32) // We want just the head.
 
 /datum/sprite_accessory/synth_head/get_base_preview_icon()
-	return
+	return uni_icon('modular_zubbers/icons/customization/template.dmi', "blank")
 
 /datum/sprite_accessory/antenna
 	crop_area = list(8, 18, 23, 32) // We want just the head.
@@ -20,4 +20,4 @@
 	crop_area = list(8, 18, 23, 32) // We want just the head.
 
 /datum/sprite_accessory/screen/get_base_preview_icon()
-	return
+	return uni_icon('modular_zubbers/icons/customization/template.dmi', "blank")
